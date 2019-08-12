@@ -3,9 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "apisauce": "^1.0.3",
+    "formik": "^1.5.8",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
-    "react-scripts": "3.1.0"
+    "react-redux": "^7.1.0",
+    "react-scripts": "3.1.0",
+    "reactotron-redux": "^3.1.1",
+    "reactotron-redux-saga": "^4.2.2",
+    "redux": "^4.0.4",
+    "redux-persist": "^5.10.0",
+    "redux-saga": "^1.0.5",
+    "reduxsauce": "^1.1.0",
+    "seamless-immutable": "^7.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
