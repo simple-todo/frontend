@@ -24,4 +24,9 @@ const reactotron = Reactotron.configure()
   .use(reactotronRedux())
   .connect();
 
+Reactotron.clear();
+
+console.log = Reactotron.log;
+console.tron = Reactotron;
+
 export default reactotron;
