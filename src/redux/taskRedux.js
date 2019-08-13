@@ -1,37 +1,33 @@
 import { createReducer, createActions } from "reduxsauce";
 import Immutable from "seamless-immutable";
-import { log } from "util";
 
 /* ------------- Types and Action Creators ------------- */
 // CREATE LIST ACTIONS FROM SAGA & REDUCER
 const { Types, Creators } = createActions({
   // SAGA
-  fetchLogin: ["username", "password"],
-  fetchRegister: ["username", "password", "full_name"],
+  fetchTask: ["token"],
+  // fetchRegister: ["username", "password", "full_name"],
   // REDUCER
   resetReducer: null,
-  userRequest: null,
-  userRequestError: ["error"],
-  loginRequestSuccess: ["user", "token"],
-  registerRequestSuccess: ["successRegister"],
+  taskRequest: null,
+  taskRequestError: ["error"],
+  taskRequestSuccess: ["task"],
 });
 
-export const UserTypes = Types;
+export const TaskTypes = Types;
 export default Creators;
 
 /* ------------- Initial State ------------- */
 
 export const INITIAL_STATE = Immutable({
-  user: {},
-  successRegister: false,
-  token: "",
+  task: [],
   fetch: false,
   fetchSuccess: false,
   error: null,
 });
 
 /* ------------- Reducers ------------- */
-export const userRequest = (state) => {
+export const taskRequest = (state) => {
   return {
     ...state,
     fetch: true,
@@ -39,26 +35,17 @@ export const userRequest = (state) => {
   };
 };
 
-export const loginRequestSuccess = (state, { user, token }) => {
+export const taskRequestSuccess = (state, { task }) => {
+  console.log(task);
   return {
     ...state,
-    user,
-    token,
+    task,
     fetch: false,
     fetchSuccess: true,
   };
 };
 
-export const registerRequestSuccess = (state, { successRegister }) => {
-  return {
-    ...state,
-    successRegister: true,
-    fetch: false,
-    fetchSuccess: true,
-  };
-};
-
-export const userRequestError = (state, { error }) => {
+export const taskRequestError = (state, { error }) => {
   return {
     ...state,
     error,
@@ -75,8 +62,7 @@ export const resetReducer = () => {
 /* Only list the REDUCERS on here*/
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.RESET_REDUCER]: resetReducer,
-  [Types.USER_REQUEST]: userRequest,
-  [Types.USER_REQUEST_ERROR]: userRequestError,
-  [Types.LOGIN_REQUEST_SUCCESS]: loginRequestSuccess,
-  [Types.REGISTER_REQUEST_SUCCESS]: registerRequestSuccess,
+  [Types.TASK_REQUEST]: taskRequest,
+  [Types.TASK_REQUEST_ERROR]: taskRequestError,
+  [Types.TASK_REQUEST_SUCCESS]: taskRequestSuccess,
 });

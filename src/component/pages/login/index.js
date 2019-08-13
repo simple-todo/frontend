@@ -27,29 +27,33 @@ class Login extends Component {
       showLoading: this.props.user.fetch,
       errorMessage: this.props.user.error,
       successRegister: this.props.user.successRegister,
+      isLogin: this.props.route.isLogin,
     };
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
     let update = {};
+    // Flag to navigate to home screen, after user success login
+    if (nextProps.route.isLogin !== prevState.isLogin) {
+      update.isLogin = nextProps.route.isLogin;
+      nextProps.history.push("/home");
+    }
+
     if (nextProps.user.fetch !== prevState.showLoading) {
       update.showLoading = nextProps.user.fetch;
     }
 
+    // Flag to tell, user success register or not
     if (nextProps.user.successRegister !== prevState.successRegister) {
       update.successRegister = nextProps.user.successRegister;
     }
 
     if (nextProps.user.error !== prevState.errorMessage) {
-      alert(nextProps.user.error); // Show message to user everytime we have an error
       update.errorMessage = nextProps.user.error;
+      alert(nextProps.user.error); // Show message to user everytime we have an
     }
 
     return update;
-  }
-
-  componentWillMount() {
-    this.props.resetUserReducer();
   }
 
   changeHandler = (event) => {
@@ -126,7 +130,7 @@ class Login extends Component {
     return (
       <FormContainer>
         <StyledTabsContainer>
-          <StyledTabs defaultActiveKey="register">
+          <StyledTabs defaultActiveKey="login">
             <Tab eventKey="login" title="Login">
               {this.renderLoginForm()}
             </Tab>
@@ -141,7 +145,6 @@ class Login extends Component {
 
   render() {
     const { showLoading } = this.state;
-    console.log("this.state: ", this.state);
 
     return (
       <LoadingOverlay active={showLoading} spinner>
@@ -160,9 +163,9 @@ const mapStateToProps = ({ route, user }) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    resetUserReducer: () => dispatch(userActions.resetReducer()),
     fetchLoginSaga: (username, password) => dispatch(userActions.fetchLogin(username, password)),
     fetchRegisterSaga: (username, password, full_name) => dispatch(userActions.fetchRegister(username, password, full_name)),
+    // resetUserReducer: () => dispatch(userActions.resetReducer()),
     // toggleLoginState: () => dispatch(routeActions.toggleLoginState()),
   };
 };
@@ -174,6 +177,7 @@ export default connect(
 
 Login.propTypes = {
   user: PropTypes.object,
+  route: PropTypes.object,
 };
 
 Login.defaultProps = {
@@ -184,6 +188,9 @@ Login.defaultProps = {
     fetchSuccess: false,
     error: null,
     successRegister: false,
+  },
+  route: {
+    isLogin: false,
   },
 };
 

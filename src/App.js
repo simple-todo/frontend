@@ -5,7 +5,7 @@ import Reactotron from "reactotron-react-js";
 
 import createStore from "../src/redux";
 import Login from "./component/pages/login";
-import Route from "./route/Routes";
+import Routes from "./route/Routes";
 
 export default class App extends Component {
   render() {
@@ -16,7 +16,7 @@ export default class App extends Component {
     return (
       <Provider store={store}>
         <PersistGate persistor={persistor}>
-          <Route />
+          <Routes />
         </PersistGate>
       </Provider>
     );

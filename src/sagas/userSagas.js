@@ -30,13 +30,15 @@ export function* fetchLogin({ username, password }) {
   const response = yield call(fetchLoginApi, { username, password });
   console.log("response: ", response);
 
-  if (response !== null) {
+  if (response !== null && response.data !== null) {
     const { user, token } = response.data;
     yield put(userActions.loginRequestSuccess(user, token));
     yield put(routeActions.toggleLoginState());
   } else {
+    console.log("response: ", response, "kok engk masul");
     const error = response.message || "Bad Connection";
     yield put(userActions.userRequestError(error));
+    console.log("setelah actions");
   }
 }
 
