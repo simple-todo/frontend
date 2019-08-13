@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Link, Redirect, withRouter, Switch } fr
 import { connect } from "react-redux";
 import styled from "styled-components";
 
+import routeActions from "../redux/routeRedux";
 import userActions from "../redux/userRedux";
 import PrivateRoute from "./PrivateRoute";
 import Login from "../component/pages/login";
@@ -10,7 +11,13 @@ import Home from "../component/pages/home";
 
 class Routes extends React.Component {
   componentWillMount() {
-    // this.props.resetUserReducer();
+    this.props.resetUserReducer();
+  }
+
+  logout() {
+    this.props.toggleLoginState();
+
+    console.log(this.props);
   }
 
   renderNavBar() {
@@ -21,7 +28,7 @@ class Routes extends React.Component {
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
           <ul className="navbar-nav mr-auto ">
             <li>
-              <Link to={"/login"} className="nav-link">
+              <Link onClick={() => this.logout()} to={"/login"} className="nav-link">
                 Logout
               </Link>
             </li>
@@ -33,7 +40,6 @@ class Routes extends React.Component {
 
   render() {
     const { isLogin } = this.props.route;
-
     return (
       <Router>
         {this.renderNavBar()}
@@ -57,11 +63,12 @@ const mapStateToProps = ({ route, login }) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     resetUserReducer: () => dispatch(userActions.resetReducer()),
+    toggleLoginState: () => dispatch(routeActions.toggleLoginState()),
   };
 };
 
 const MainContent = styled.div`
-  background-color: red;
+  // background-color: red;
   display: flex;
   flex: 1;
 `;
@@ -70,12 +77,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
 )(Routes);
-
-// Always use withRouter if u want combine react-router v4 with redux.
-// component will not re render, if u only use connect()
-// export default withRouter(
-//   connect(
-//     mapStateToProps,
-//     mapDispatchToProps,
-//   )(Routes),
-// );

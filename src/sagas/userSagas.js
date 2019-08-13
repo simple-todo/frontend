@@ -16,9 +16,23 @@ export function fetchLoginApi({ username, password }) {
 }
 
 export function fetchRegisterApi({ username, password, full_name }) {
-  return api
-    .create()
-    .register(username, password, full_name)
+  // return api
+  //   .create()
+  //   .register(username, password, full_name)
+  //   .then((response) => response.data)
+  //   .then((responseBody) => responseBody)
+  //   .catch((error) => error);
+
+  return axios
+    .post(
+      `https://pcdp2m10n8.execute-api.ap-southeast-1.amazonaws.com/dev/api/user-management/register`,
+      { username, password, full_name },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+    )
     .then((response) => response.data)
     .then((responseBody) => responseBody)
     .catch((error) => error);
@@ -43,11 +57,12 @@ export function* fetchLogin({ username, password }) {
 }
 
 export function* fetchRegister({ username, password, full_name }) {
+  console.log("username, password, full_name: ", username, password, full_name);
   yield put(userActions.userRequest());
   const response = yield call(fetchRegisterApi, { username, password, full_name });
   console.log("response: ", response);
 
-  if (response.data !== null) {
+  if (response.data !== null && response.status === 200) {
     const { success, message } = response.data;
     if (success) {
       yield put(userActions.registerRequestSuccess(message));

@@ -8,7 +8,7 @@ import { TaskTypes } from "../redux/taskRedux";
 /* ------------- Sagas ------------- */
 import { fetchLogin, fetchRegister } from "./userSagas";
 import { toggleLoginState } from "./routeSagas";
-import { fetchTask } from "./taskSagas";
+import { fetchTask, fetchDeleteTask, fetchUpdateTask, fetchAddTask } from "./taskSagas";
 
 /* ------------- Connect Types To Sagas ------------- */
 export default function* root() {
@@ -18,4 +18,7 @@ export default function* root() {
   yield all([takeLatest(RouteTypes.TOGGLE_LOGIN_STATE, toggleLoginState)]);
 
   yield all([takeLatest(TaskTypes.FETCH_TASK, fetchTask)]);
+  yield all([takeLatest(TaskTypes.FETCH_DELETE_TASK, fetchDeleteTask)]);
+  yield all([takeLatest(TaskTypes.FETCH_UPDATE_TASK, fetchUpdateTask)]);
+  yield all([takeLatest(TaskTypes.FETCH_ADD_TASK, fetchAddTask)]);
 }

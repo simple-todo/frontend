@@ -3,41 +3,41 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
-// import styles from "./login.css";
-import userActions from "../../../redux/userRedux";
-import routeActions from "../../../redux/routeRedux";
+export default class AddTodo extends Component {
+  state = {
+    title: "",
+  };
 
-class AddTodo extends Component {
+  onSubmit = (e) => {
+    if (this.state.title === "") {
+      alert("Please add task first");
+      return;
+    }
+
+    e.preventDefault();
+    this.props.addTodo(this.state.title);
+    this.setState({ title: "" });
+  };
+
+  onChange = (e) => this.setState({ title: e.target.value });
+
   render() {
     return (
       <Container style={{ display: "flex" }}>
-        <Input type="text" name="title" placeholder="Add Todo..." />
-        <Submit>Add</Submit>
+        <Input type="text" name="title" placeholder="Add Todo..." value={this.state.title} onChange={this.onChange} />
+        <Submit onClick={this.onSubmit}>Add</Submit>
       </Container>
     );
   }
 }
 
-const mapStateToProps = ({ route, user }) => {
-  return {
-    route,
-    user,
-  };
+AddTodo.propTypes = {
+  addTodo: PropTypes.func,
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchLoginSaga: (username, password) => dispatch(userActions.fetchLogin(username, password)),
-    fetchRegisterSaga: (username, password, full_name) => dispatch(userActions.fetchRegister(username, password, full_name)),
-    // resetUserReducer: () => dispatch(userActions.resetReducer()),
-    // toggleLoginState: () => dispatch(routeActions.toggleLoginState()),
-  };
+AddTodo.propTypes = {
+  addTodo: () => {},
 };
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(AddTodo);
 
 const Container = styled.div`
   display: flex;

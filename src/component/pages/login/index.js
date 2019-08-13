@@ -15,10 +15,10 @@ class Login extends Component {
     this.state = {
       formControls: {
         username: {
-          value: "ayam",
+          value: "",
         },
         password: {
-          value: "kucing",
+          value: "",
         },
         fullName: {
           value: "",
@@ -99,6 +99,10 @@ class Login extends Component {
   }
 
   renderRegisterForm() {
+    const {
+      formControls: { username, password, fullName },
+    } = this.state;
+
     return (
       <Form>
         <LabelContainer>
@@ -118,7 +122,7 @@ class Login extends Component {
 
         <Submit
           onClick={() => {
-            this.props.fetchRegisterSaga("bambang1", "1234", "bambang handoko");
+            this.props.fetchRegisterSaga(username.value, password.value, fullName.value);
           }}>
           Submit
         </Submit>
@@ -165,8 +169,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchLoginSaga: (username, password) => dispatch(userActions.fetchLogin(username, password)),
     fetchRegisterSaga: (username, password, full_name) => dispatch(userActions.fetchRegister(username, password, full_name)),
-    // resetUserReducer: () => dispatch(userActions.resetReducer()),
-    // toggleLoginState: () => dispatch(routeActions.toggleLoginState()),
+    resetUserReducerSaga: () => dispatch(userActions.resetReducer()),
   };
 };
 
