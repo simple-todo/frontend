@@ -8,7 +8,7 @@ import storage from "redux-persist/lib/storage";
 
 const persistConfig = {
   key: "root",
-  storage
+  storage,
 };
 
 // creates the store
@@ -25,8 +25,6 @@ export default (rootReducer, rootSaga) => {
   enhancers.push(applyMiddleware(...middleware));
 
   const persistedReducer = persistReducer(persistConfig, rootReducer);
-
-  console.log(Reactotron);
 
   const store = Reactotron.createStore(persistedReducer, compose(...enhancers));
   const persistor = persistStore(store);

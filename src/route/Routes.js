@@ -1,12 +1,7 @@
 import React from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  Redirect,
-  withRouter
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Redirect, withRouter, Switch } from "react-router-dom";
 import { connect } from "react-redux";
+import { Nav, Container, Row, Col, Navbar, NavDropdown, Form, FormControl, Button } from "react-bootstrap";
 
 import PrivateRoute from "./PrivateRoute";
 import Login from "../component/pages/login";
@@ -16,55 +11,37 @@ const Profile = () => <h3>PROFILE</h3>;
 const Forum = () => <h3>FORUM</h3>;
 const Adsanse = () => <h3>ADSANSE</h3>;
 
-// TOMBOL SIGN OUT
-// const AuthButton = withRouter(({ history }) =>
-//   fakeAuth.isAuthenticated ? (
-//     <p>
-//       Welcome!{" "}
-//       <button
-//         onClick={() => {
-//           fakeAuth.signout(() => history.push("/"));
-//         }}
-//       >
-//         Sign out
-//       </button>
-//     </p>
-//   ) : (
-//     <p>You are not logged in.</p>
-//   )
-// );
-
 class Routes extends React.Component {
   render() {
-    console.log("route ", this.props.route.isLogin);
-
     const { isLogin } = this.props.route;
+
     return (
       <Router>
         <div>
-          <ul>
-            <li>
-              <Link to="/login">LOGIN</Link>
-            </li>
-            <li>
-              <Link to="/home">HOME</Link>
-            </li>
+          <h3>Simple Todo</h3>
+          <nav className="navbar navbar-expand-lg navbar-light bg-light">
+            <ul className="navbar-nav mr-auto">
+              <li>
+                <Link to={"/login"} className="nav-link">
+                  Login
+                </Link>
+              </li>
 
-            <li>
-              <Link to="/profile">profile</Link>
-            </li>
-            <li>
-              <Link to="/forum">forum</Link>
-            </li>
-            <li>
-              <Link to="/Adsanse">adsanse</Link>
-            </li>
-          </ul>
-          <Route path="/login" component={Login} />
-          <PrivateRoute path="/profile" component={Profile} isLogin={isLogin} />
-          <PrivateRoute path="/forum" component={Forum} isLogin={isLogin} />
-          <PrivateRoute path="/Adsanse" component={Adsanse} isLogin={isLogin} />
-          <PrivateRoute path="/home" component={Home} isLogin={isLogin} />
+              <li>
+                <Link to={"/profile"} className="nav-link">
+                  profile
+                </Link>
+              </li>
+            </ul>
+          </nav>
+          <hr />
+          <Switch>
+            <Route path="/login" component={Login} />
+            <PrivateRoute path="/profile" component={Profile} isLogin={isLogin} />
+            <PrivateRoute path="/forum" component={Forum} isLogin={isLogin} />
+            <PrivateRoute path="/Adsanse" component={Adsanse} isLogin={isLogin} />
+            <PrivateRoute path="/home" component={Home} isLogin={isLogin} />
+          </Switch>
         </div>
       </Router>
     );
@@ -73,11 +50,11 @@ class Routes extends React.Component {
 
 const mapStateToProps = ({ route, login }) => {
   return {
-    route
+    route,
   };
 };
 
 export default connect(
   mapStateToProps,
-  null
+  null,
 )(Routes);

@@ -5,10 +5,14 @@ import Immutable from "seamless-immutable";
 // CREATE LIST ACTIONS FROM SAGA & REDUCER
 const { Types, Creators } = createActions({
   // SAGA
-  fetchUser: ["username", "password"],
+  fetchLogin: ["username", "password"],
+  fetchRegister: ["username", "password", "full_name"],
   // REDUCER
-  loginRequest: null,
-  resetReducer: null
+  resetReducer: null,
+  userRequest: null,
+  userRequestError: ["error"],
+  loginRequestSuccess: ["user", "token"],
+  registerRequestSuccess: ["successRegister"],
 });
 
 export const UserTypes = Types;
@@ -17,18 +21,48 @@ export default Creators;
 /* ------------- Initial State ------------- */
 
 export const INITIAL_STATE = Immutable({
-  fetching: false,
-  errorMessage: "",
-  error: false
+  user: {},
+  successRegister: false,
+  token: "",
+  fetch: false,
+  fetchSuccess: false,
+  error: null,
 });
 
 /* ------------- Reducers ------------- */
-export const loginRequest = state => {
+export const userRequest = (state) => {
   return {
     ...state,
-    fetching: true,
-    error: false,
-    errorMessage: "mau nya tidak berubah meong moeng moeng"
+    fetch: true,
+    fetchSuccess: false,
+  };
+};
+
+export const loginRequestSuccess = (state, { user, token }) => {
+  return {
+    ...state,
+    user,
+    token,
+    fetch: false,
+    fetchSuccess: true,
+  };
+};
+
+export const registerRequestSuccess = (state, { successRegister }) => {
+  return {
+    ...state,
+    successRegister: true,
+    fetch: false,
+    fetchSuccess: true,
+  };
+};
+
+export const userRequestError = (state, { error }) => {
+  return {
+    ...state,
+    error,
+    fetch: false,
+    fetchSuccess: false,
   };
 };
 
@@ -39,6 +73,9 @@ export const resetReducer = () => {
 /* ------------- Hookup Reducers To Types ------------- */
 /* Only list the REDUCERS on here*/
 export const reducer = createReducer(INITIAL_STATE, {
-  [Types.LOGIN_REQUEST]: loginRequest,
-  [Types.RESET_REDUCER]: resetReducer
+  [Types.RESET_REDUCER]: resetReducer,
+  [Types.USER_REQUEST]: userRequest,
+  [Types.USER_REQUEST_ERROR]: userRequestError,
+  [Types.LOGIN_REQUEST_SUCCESS]: loginRequestSuccess,
+  [Types.REGISTER_REQUEST_SUCCESS]: registerRequestSuccess,
 });
