@@ -6,7 +6,6 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import LoadingOverlay from "react-loading-overlay";
 
-import Userctions from "../../../redux/userRedux";
 import taskActions from "../../../redux/taskRedux";
 import AddTodo from "../../molecules/addTodo";
 
