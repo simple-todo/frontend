@@ -1,4 +1,4 @@
-import { put, call, select } from "redux-saga/effects";
+import { put } from "redux-saga/effects";
 import axios from "axios";
 import taskActions from "../redux/taskRedux";
 import api from "../services/api";

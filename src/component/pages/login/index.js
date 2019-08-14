@@ -5,9 +5,7 @@ import { Tab, Tabs } from "react-bootstrap";
 import PropTypes from "prop-types";
 import LoadingOverlay from "react-loading-overlay";
 
-// import styles from "./login.css";
 import userActions from "../../../redux/userRedux";
-import routeActions from "../../../redux/routeRedux";
 
 class Login extends Component {
   constructor(props) {

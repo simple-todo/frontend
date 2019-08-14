@@ -1,8 +1,8 @@
-import { put, call, select } from "redux-saga/effects";
+import { put, select } from "redux-saga/effects";
 
 import routeActions from "../redux/routeRedux";
 
-const getLastLoginState = state => state.route.isLogin;
+const getLastLoginState = (state) => state.route.isLogin;
 
 // SAGAS
 export function* toggleLoginState() {

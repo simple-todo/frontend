@@ -1,4 +1,4 @@
-import { put, call, select } from "redux-saga/effects";
+import { put } from "redux-saga/effects";
 
 import userActions from "../redux/userRedux";
 import routeActions from "../redux/routeRedux";

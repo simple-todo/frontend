@@ -10,7 +10,7 @@ import Userctions from "../../../redux/userRedux";
 import taskActions from "../../../redux/taskRedux";
 import AddTodo from "../../molecules/addTodo";
 
-class Home extends React.Component {
+class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {

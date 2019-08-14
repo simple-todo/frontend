@@ -4,7 +4,6 @@ import { PersistGate } from "redux-persist/integration/react";
 import Reactotron from "reactotron-react-js";
 
 import createStore from "../src/redux";
-import Login from "./component/pages/login";
 import Routes from "./route/Routes";
 
 export default class App extends Component {
