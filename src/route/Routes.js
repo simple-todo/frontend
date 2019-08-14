@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Switch, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import styled from "styled-components";
 
@@ -8,6 +8,7 @@ import userActions from "../redux/userRedux";
 import PrivateRoute from "./PrivateRoute";
 import Login from "../component/pages/login";
 import Home from "../component/pages/home";
+import App from "../component/pages/app";
 
 class Routes extends React.Component {
   componentWillMount() {
@@ -38,14 +39,15 @@ class Routes extends React.Component {
 
   render() {
     const { isLogin } = this.props.route;
+
     return (
       <Router>
         {this.renderNavBar()}
         <MainContent>
           <Switch>
-            <Route path="/" component={Login} />
+            <Route path="/" exact component={Login} />
             <Route path="/login" component={Login} />
-            <PrivateRoute path="/home" component={Home} isLogin={isLogin} />
+            <PrivateRoute path="/home" isLogin={isLogin} component={Home} />
           </Switch>
         </MainContent>
       </Router>

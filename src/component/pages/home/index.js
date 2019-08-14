@@ -2,6 +2,7 @@ import "font-awesome/css/font-awesome.min.css";
 
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import LoadingOverlay from "react-loading-overlay";
@@ -60,6 +61,7 @@ class Home extends Component {
 
   render() {
     const { showLoading } = this.state;
+
     return (
       <LoadingOverlay active={showLoading} spinner>
         <Container>
@@ -95,10 +97,12 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Home);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  )(Home),
+);
 
 Home.propTypes = {
   user: PropTypes.object,

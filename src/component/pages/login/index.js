@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import styled from "styled-components";
 import { Tab, Tabs } from "react-bootstrap";
 import PropTypes from "prop-types";
@@ -188,10 +189,12 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Login);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  )(Login),
+);
 
 Login.propTypes = {
   user: PropTypes.object,
