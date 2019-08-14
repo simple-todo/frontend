@@ -11,13 +11,11 @@ import Home from "../component/pages/home";
 
 class Routes extends React.Component {
   componentWillMount() {
-    this.props.resetUserReducer();
+    // this.props.resetUserReducer();
   }
 
   logout() {
     this.props.toggleLoginState();
-
-    console.log(this.props);
   }
 
   renderNavBar() {

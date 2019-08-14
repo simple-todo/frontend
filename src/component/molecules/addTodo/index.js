@@ -48,6 +48,7 @@ const Submit = styled.button`
   background-color: #49c6e5;
   color: #19647e;
   margin-bottom: 10px;
+  height: 100%;
 
   &:focus {
     outline: 0;

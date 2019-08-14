@@ -6,7 +6,7 @@ import api from "../services/api";
 const getToken = (state) => state.user.token;
 
 // API
-export function fetchTaskApi({ token }) {
+export function fetchTaskApi(token) {
   return api
     .create()
     .getTask(token)
@@ -66,15 +66,13 @@ export function fetchUpdateTaskApi({ token, todo_id }) {
 export function* fetchTask() {
   yield put(taskActions.taskRequest());
   const token = yield select(getToken);
-  const response = yield call(fetchTaskApi, { token });
+  const response = yield fetchTaskApi(token);
   console.log("response fetchTask: ", response);
 
   if (response !== null && response.status === 200) {
     const { data } = response.data;
     yield put(taskActions.taskRequestSuccess(data));
   } else {
-    console.log("harusna masuk ke else log");
-
     const error = response.message || "Bad Connection";
     yield put(taskActions.taskRequestError(error));
   }

@@ -1,6 +1,5 @@
 import { createReducer, createActions } from "reduxsauce";
 import Immutable from "seamless-immutable";
-import { log } from "util";
 
 /* ------------- Types and Action Creators ------------- */
 // CREATE LIST ACTIONS FROM SAGA & REDUCER
@@ -28,6 +27,7 @@ export const INITIAL_STATE = Immutable({
   fetch: false,
   fetchSuccess: false,
   error: null,
+  message: "",
 });
 
 /* ------------- Reducers ------------- */
@@ -52,6 +52,7 @@ export const loginRequestSuccess = (state, { user, token }) => {
 export const registerRequestSuccess = (state, { successRegister }) => {
   return {
     ...state,
+    error: successRegister,
     successRegister: true,
     fetch: false,
     fetchSuccess: true,

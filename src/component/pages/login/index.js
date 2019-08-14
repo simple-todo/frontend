@@ -20,6 +20,12 @@ class Login extends Component {
         password: {
           value: "",
         },
+        usernameRegister: {
+          value: "",
+        },
+        passwordRegister: {
+          value: "",
+        },
         fullName: {
           value: "",
         },
@@ -28,6 +34,7 @@ class Login extends Component {
       errorMessage: this.props.user.error,
       successRegister: this.props.user.successRegister,
       isLogin: this.props.route.isLogin,
+      registerMessage: this.props.user.message,
     };
   }
 
@@ -50,7 +57,8 @@ class Login extends Component {
 
     if (nextProps.user.error !== prevState.errorMessage) {
       update.errorMessage = nextProps.user.error;
-      alert(nextProps.user.error); // Show message to user everytime we have an
+      nextProps.user.error !== "" && nextProps.user.error !== null && alert(nextProps.user.error); // Show message to user everytime we receive feedback from server
+      nextProps.resetUserReducerSaga();
     }
 
     return update;
@@ -94,37 +102,46 @@ class Login extends Component {
           }}>
           Login
         </Submit>
+        <p>For Testing, please use :</p>
+        <p>Username: ayam</p>
+        <p>Password: kucing</p>
       </Form>
     );
   }
 
   renderRegisterForm() {
     const {
-      formControls: { username, password, fullName },
+      formControls: { usernameRegister, passwordRegister, fullName },
     } = this.state;
 
     return (
       <Form>
         <LabelContainer>
           <Label htmlFor="username">Username</Label>
-          <input id="username" name="username" type="text" />
+          <input id="username" name="usernameRegister" type="text" value={usernameRegister.value} onChange={this.changeHandler} />
         </LabelContainer>
 
         <LabelContainer>
           <Label htmlFor="password">Password</Label>
-          <input id="password" name="password" type="password" />
+          <input
+            id="password"
+            name="passwordRegister"
+            type="password"
+            value={passwordRegister.value}
+            onChange={this.changeHandler}
+          />
         </LabelContainer>
 
         <LabelContainer>
           <Label htmlFor="password">Full Name</Label>
-          <input id="fullName" name="fullName" type="text" />
+          <input id="fullName" name="fullName" type="text" value={fullName.value} onChange={this.changeHandler} />
         </LabelContainer>
 
         <Submit
           onClick={() => {
-            this.props.fetchRegisterSaga(username.value, password.value, fullName.value);
+            this.props.fetchRegisterSaga(usernameRegister.value, passwordRegister.value, fullName.value);
           }}>
-          Submit
+          Register
         </Submit>
       </Form>
     );
