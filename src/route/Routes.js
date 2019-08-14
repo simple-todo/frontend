@@ -43,6 +43,7 @@ class Routes extends React.Component {
         {this.renderNavBar()}
         <MainContent>
           <Switch>
+            <Route path="/" component={Login} />
             <Route path="/login" component={Login} />
             <PrivateRoute path="/home" component={Home} isLogin={isLogin} />
           </Switch>
